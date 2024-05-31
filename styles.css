@@ -18,7 +18,7 @@
     gap: 10px;
 }
 
-.grid_sizing, .grid_clearing{
+.grid_sizing, .grid_clearing, .color_black, .color_rainbow{
     border-radius: 10px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 20px;
@@ -28,13 +28,15 @@
     padding: 10px;
     font-weight: bold;
     text-shadow: 2px 2px 6px black;
+    cursor: pointer;
 }
 
 .grid_container{
     display: flex;
     justify-content: center;
     padding-top: 1%;
-    /* align-items: center; */
+    gap: 20px;
+    align-items: center;
 }
 
 .grid{
@@ -48,11 +50,3 @@
 .square{
     border: 1px solid black;
 }
-
-.grid_clearing, .grid_sizing{
-    cursor: pointer;
-}
-
-/* .square.hovered{
-    background-color: #3498db;
-} */
