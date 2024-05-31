@@ -1,7 +1,13 @@
 let gridSize = 16;
-const grid = document.querySelector('.grid');
+let grid = document.querySelector('.grid');
 let gridCHange = document.querySelector(".grid_sizing");
 const clearGrid = document.querySelector(".grid_clearing");
+const rainbowButton = document.querySelector(".color_rainbow");
+const blackButton = document.querySelector(".color_black");
+let rainbowColor = false;
+let blackColor = false;
+
+let options = document.querySelector(".options");
 
 
 //Call to create the InitialGrid.
@@ -15,14 +21,41 @@ clearGrid.addEventListener("click", ()=>{
     resetGrid();
     createGrid(gridSize);
 
+});
+
+//Call used to set rainbow color
+rainbowButton.addEventListener("click", ()=>{
+    rainbowColor = true;
+    blackColor =false;
 })
+
+//Call used to set black color
+blackButton.addEventListener("click", ()=>{
+   blackColor = true;
+   rainbowColor = false;
+})
+
+//Call used to get new color for grid
+grid.addEventListener('mouseover', function (e) {
+    if (e.target.id !== 'grid') {
+        if (rainbowColor) {
+            e.target.style.backgroundColor = getRandomColor();
+        } else if (blackColor) {
+            e.target.style.backgroundColor = 'black';
+        } else {
+            e.target.style.backgroundColor = 'white';
+        }
+
+    }
+
+});
 
 /**
  * Creates the grid based on dimensions entered.
  * @param {*} gridDimension used for size per row/column
  */
 function createGrid(gridDimension){
-    const grid = document.querySelector('.grid');
+    grid = document.querySelector('.grid');
     grid.style.gridTemplateColumns = `repeat(${gridDimension}, 1fr)`;
     grid.style.gridTemplateRows = `repeat(${gridDimension}, 1fr)`;
     for (let i = 0; i < gridDimension; i++) {
@@ -31,10 +64,8 @@ function createGrid(gridDimension){
             const square = document.createElement('div');
             square.classList.add('square');
             // grid.appendChild(square);
-            console.log("Added new child " + i);
-
             square.addEventListener('mouseover', function() {
-                square.style.backgroundColor = getRandomColor();
+                square.style.backgroundColor = "black";
             });
     
             grid.appendChild(square);
@@ -70,12 +101,17 @@ function resetGrid()
  * Changes the grid dimensions based on valid input.
  */
 function getGridChange(){
-    resetGrid();
     let newGridSize = prompt("Enter a new Grid Size (between 1 - 100");
     if( newGridSize > 0 && newGridSize <= 100){
+        resetGrid();
+        rainbowColor = false;
+        blackColor = false;
         createGrid(newGridSize)
+    } else if (newGridSize === undefined || newGridSize === null){
+        alert("Cancelling , going back to current grid");
     } else {
-        alert("Enter a valid number between 1-100. Resetting to 16");
-        createGrid(gridSize);
+            alert("Enter a valid number between 1-100. Resetting to 16");
+            resetGrid();
+            createGrid(gridSize);
     }
 }
